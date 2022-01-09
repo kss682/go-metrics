@@ -1,0 +1,31 @@
+version: "3.1"
+
+services:
+  go-server:
+    build: .
+    restart: always
+    ports:
+      - '8080:8080'
+    expose:
+      - '8081'
+    container_name: 'go-server'
+    
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    
+  # grafana_service:
+  #   image: grafana/grafana:6.5.0
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - 'grafana-storage:/var/lib/grafana'
+    
+# volumes:
+#   - grafana-storage:
+      
